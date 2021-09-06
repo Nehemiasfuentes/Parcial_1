@@ -1,0 +1,146 @@
+usando el  sistema ;
+utilizando  System . Colecciones . Genérico ;
+utilizando  System . Linq ;
+utilizando  System . Texto ;
+utilizando  System . Enhebrado . Tareas ;
+utilizando  System . IO ;
+espacio de nombres  Parcial_1
+{
+     programa de clase
+    {
+        static  void  Main ( cadena [] argumentos )
+        {
+            inicio ();
+        }
+        privada  estática  cadena de  direccion ()
+        {
+            string  path  =  @ " C: \ Users \ hecto \ source \ repos \ Parcial 1 \ Parcial 1 \ archivos \ contrasenas.txt " ;
+             camino de regreso ;
+        }
+        privado  estático  void  inicio ()
+        {
+            string  adminuser  =  " admin " ;
+            string  adminpass  =  " 123 " ;
+            Consola . WriteLine ( " -------------------------------- " );
+            Consola . WriteLine ( " USUARIO. " );
+            var  user  =  Console . ReadLine ();
+            if ( buscar ( usuario ))
+            {
+                Consola . WriteLine ( " -------------------------------- " );
+                Consola . WriteLine ( " EL USUARIO EXISTE. " );
+                Consola . WriteLine ( " " );
+                Consola . WriteLine ( " CONTRASENA " );
+                Consola . WriteLine ( " -------------------------------- " );
+                var  pass  =  Consola . ReadLine ();
+                if ( ! read (). ContainsValue ( pasar ))
+                {
+                    Consola . Escribir ( " CONTRASENA CORRECTA " );
+                    Consola . Escribir ( " " );
+                    Consola . Escriba ( " USTED INGRESO COMO INVITADO. " );
+                    menuinvitado ();
+                }
+                demás
+                {
+@@ -163,10 +164,14 @@ vacío estático privado docalumno ()
+            Consola . WriteLine ( " ESCRIBA SU EXPERIENCIA. " );
+            string  experiencia  =  Consola . ReadLine ();
+
+            StreamWriter  sw  =  Archivo . CreateText ( diralumnos ( nombre ));
+            sw . WriteLine ( experiencia );
+            sw . Dispose ();
+            usando ( StreamWriter  pr  =  File . AppendText ( diralumnos ( nombre )))
+            {
+                pr . WriteLine ( " {0}; {1} " , nombre , experiencia );
+                pr . Cerrar ();
+            }
+            menuadmin ();
+
+
+        }
+         vacío estático  privado borrardoc () 
+        {
+@@ -183,13 +188,81 @@ vacío estático privado borrardoc ()
+            }
+            demás
+            {
+                Consola . WriteLine ( " EL USUARIO NO EXISTE. " );
+                devolver  falso ;
+                Consola . WriteLine ( " EL ARCHIVO NO EXISTE. " );
+            }
+        }
+        private  static  bool  menuinvitado ()
+        {
+            Consola . Borrar ();
+            Consola . WriteLine ( " ------------------------- " );
+            Consola . WriteLine ( " MENÚ DE INVITADO. " );
+            Consola . WriteLine ( " 1 - ARCHIVO LEER. " );
+            Consola . WriteLine ( " 2 - SALIR " );
+            Consola . WriteLine ( " ------------------------- " );
+            Consola . WriteLine ( " SELECCIONE UNA OPCION. " );
+
+            conmutador ( Console . ReadLine ())
+            {
+                caso  " 1 " :
+                    buscardocs ();
+                    menuinvitado ();
+                    devuelve  verdadero ;
+                caso  " 2 " :
+                    Consola . WriteLine ( " PRESIONE CUALQUIER TECLA PARA CERRAR LA CONSOLA. " );
+                    Consola . ReadKey ();
+                    devolver  falso ;
+                por defecto :
+                    devolver  falso ;
+            }
+        }
+         menú vacío estático  privado invitado () 
+
+         vacío estático  privado buscardocs () 
+        {
+            DirectoryInfo  d  =  new  DirectoryInfo ( @ " C: \ Users \ hecto \ source \ repos \ Parcial 1 \ Parcial 1 \ archivos " );
+
+            FileInfo [] Archivos  =  d . GetFiles ( " * .txt " );
+            string  str  =  " " ;
+            int  cont  =  1 ;
+
+            foreach ( archivo FileInfo  en Archivos )  
+            {
+                str  =  Convertir . ToString ( cont ) +  " - "  +  archivo . Nombre ;
+                Consola . WriteLine ( " {0} " , str );
+                cont  =  cont  +  1 ;
+            }
+
+            Consola . WriteLine ( " ----------------- " );
+            Consola . WriteLine ( " ESCRIBA EL NOMBRE DE CUALQUIER ARCHIVO PARA MOSTRARLO " );
+            string  docname  =  Consola . ReadLine ();
+            bool  result  =  Archivo . Existe ( diralumnos ( docname ));
+            si ( resultado  ==  verdadero )
+            {
+                Diccionario < objeto , objeto > listdata  =  new  Diccionario < objeto , objeto > ();
+                usando ( var  reader  =  new  StreamReader ( diralumnos ( docname )))
+                {
+                     líneas de cuerda ;
+                    while (( líneas  =  lector . ReadLine ()) ! =  null )
+                    {
+                        cadena [] keyvalue  =  líneas . Dividir ( ';' );
+                        if (valor clave . Longitud  ==  2  || valor  clave . Longitud  ==  1 )
+                        {
+                            listdata . Agregar (valor clave [ 0 ], valor clave [ 1 ]);
+                        }
+                    }
+                }
+                Consola . WriteLine ( " EL ARCHIVO EXISTE. " );
+                Consola . WriteLine ( " EL CONTENIDO DEL ARCHIVO ES. " );
+                foreach ( KeyValuePair < objeto , objeto > datos  en  listdata )
+                {
+                    Consola . Escribir ( " {0}; {1} " , datos . Clave , datos . Valor );
+                    Consola . WriteLine ( " " );
+                }
+                Consola . ReadKey ();
+            }
+            demás
+            {
+                Consola . WriteLine ( " EL ARCHIVO NO EXISTE. " );
+            }
+        }
+    }
+}
